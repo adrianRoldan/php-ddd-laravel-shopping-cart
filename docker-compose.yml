@@ -46,9 +46,9 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: www.bejaofit.com
+      MYSQL_DATABASE: shoppingcart
       MYSQL_ROOT_PASSWORD: b3j40f17
-      MYSQL_USER: bejaofit
+      MYSQL_USER: shoppingcart
       MYSQL_PASSWORD: b3j40f1t
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
