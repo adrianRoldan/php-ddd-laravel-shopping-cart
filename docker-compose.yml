@@ -2,22 +2,22 @@ version: '3.8'
 services:
 
   #PHP Service
-  app:
+  webapp:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: cart.app
+    container_name: cart.webapp
     restart: unless-stopped
     tty: true
     environment:
-      SERVICE_NAME: app
+      SERVICE_NAME: webapp
       SERVICE_TAGS: dev
     working_dir: /var/www
     volumes:
       - ./:/var/www
       - ./.docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
-      - app-network
+      - services-network
 
   #Nginx Service
   webserver:
@@ -32,14 +32,14 @@ services:
       - ./:/var/www
       - ./.docker/nginx/conf.d/:/etc/nginx/conf.d/
     networks:
-      - app-network
+      - services-network
 
   #MySQL Service
   db:
     image: mysql:8.0.30
     command:
       - '--character-set-server=utf8mb4'
-      - --default-authentication-plugin=mysql_native_password
+      - --authentication_policy=mysql_native_password
     container_name: cart.db
     restart: unless-stopped
     tty: true
@@ -57,7 +57,7 @@ services:
       - ./.docker/mysql/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf
       - dbdata:/var/lib/mysql/
     networks:
-      - app-network
+      - services-network
 
   #phpMyAdmin Service
   phpmyadmin:
@@ -70,11 +70,11 @@ services:
     depends_on:
       - db
     networks:
-      - app-network
+      - services-network
 
 #Docker Networks
 networks:
-  app-network:
+  services-network:
     driver: bridge
 
 #Volumes

@@ -15,8 +15,14 @@ destroy: ## Down all docker containers
 
 rebuild: destroy up ## Down all docker containers and build again
 
-bash: ## Execute and enter in bash
-	docker-compose exec app bash
+bash: ## Execute and enter in webapp bash
+	docker-compose exec webapp bash
 
-phpstan:
-	docker-compose exec app ./vendor/bin/phpstan analyse src --level 9
+bash-db: ## Execute and enter in database bash
+	docker-compose exec db bash
+
+phpstan: ## Execute code analyzer phpstan
+	docker-compose exec webapp ./vendor/bin/phpstan analyse src --level 9
+
+test: ## Execute test with phpunit
+	docker-compose exec webapp ./vendor/bin/phpunit
