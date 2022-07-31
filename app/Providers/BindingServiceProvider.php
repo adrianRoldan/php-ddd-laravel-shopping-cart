@@ -5,7 +5,7 @@ namespace App\Providers;
 use Cart\Shared\Domain\Contracts\Bus\CommandBus\CommandBusContract;
 use Cart\Shared\Domain\Contracts\DependencyContainerContract;
 use Cart\Shared\Infrastructure\Bus\CommandBus;
-use Cart\Shared\Infrastructure\LaravelDependencyContainer;
+use Cart\Shared\Infrastructure\Services\LaravelDependencyContainer;
 use Illuminate\Support\ServiceProvider;
 
 class BindingServiceProvider extends ServiceProvider

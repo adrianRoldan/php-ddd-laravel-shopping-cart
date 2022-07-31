@@ -1,6 +1,6 @@
 <?php
 
-namespace Cart\Shared\Infrastructure;
+namespace Cart\Shared\Infrastructure\Services;
 
 use Cart\Shared\Domain\Contracts\DependencyContainerContract;
 use Illuminate\Support\Facades\App;

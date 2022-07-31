@@ -6,6 +6,10 @@ use Cart\Shared\Infrastructure\Repositories\EloquentBaseModel;
 
 /**
  * @method static make(array|string[] $array_merge)
+ * @property string $id
+ * @property float $price
+ * @property string $name
+ * @property string $description
  */
 final class EloquentProduct extends EloquentBaseModel
 {

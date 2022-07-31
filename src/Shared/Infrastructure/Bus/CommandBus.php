@@ -25,9 +25,9 @@ final class CommandBus implements CommandBusContract
 
     /**
      * @param CommandContract $command
-     * @return string
+     * @return void
      */
-    public function dispatch(CommandContract $command): string
+    public function dispatch(CommandContract $command): void
     {
         $commandClass = get_class($command);
         $commandHandlerName = self::$routes[$commandClass] ?? preg_replace('/Command$/', 'Handler', $commandClass);
@@ -36,6 +36,6 @@ final class CommandBus implements CommandBusContract
         }
         /** @var CommandHandlerContract $commandHandler */
         $commandHandler = $this->container->resolve($commandHandlerName);
-        return $commandHandler->handle($command);
+        $commandHandler->handle($command);
     }
 }
