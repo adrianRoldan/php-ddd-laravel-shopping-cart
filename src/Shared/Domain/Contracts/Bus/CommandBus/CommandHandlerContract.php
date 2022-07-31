@@ -2,7 +2,10 @@
 
 namespace Cart\Shared\Domain\Contracts\Bus\CommandBus;
 
+/**
+ * Interface CommandHandler
+ * @method void handle(CommandContract $command)
+ */
 interface CommandHandlerContract
 {
-    public static function handle(CommandContract $command);
 }

@@ -12,22 +12,22 @@ final class CommandBus implements CommandBusContract
 {
     /** @var array <string> */
     public static array $routes = [];
-    private static DependencyContainerContract $container;
+    private DependencyContainerContract $container;
 
     /**
      * @param DependencyContainerContract $container
      */
     public function __construct(DependencyContainerContract $container)
     {
-       self::$container = $container;
+       $this->container = $container;
     }
 
 
     /**
      * @param CommandContract $command
-     * @return mixed|void
+     * @return string
      */
-    public static function dispatch(CommandContract $command)
+    public function dispatch(CommandContract $command): string
     {
         $commandClass = get_class($command);
         $commandHandlerName = self::$routes[$commandClass] ?? preg_replace('/Command$/', 'Handler', $commandClass);
@@ -35,7 +35,7 @@ final class CommandBus implements CommandBusContract
             throw CommandHandlerNotFound::fromMessage('Handler not found for ' . $commandClass);
         }
         /** @var CommandHandlerContract $commandHandler */
-        $commandHandler = self::$container->resolve($commandHandlerName);
+        $commandHandler = $this->container->resolve($commandHandlerName);
         return $commandHandler->handle($command);
     }
 }
