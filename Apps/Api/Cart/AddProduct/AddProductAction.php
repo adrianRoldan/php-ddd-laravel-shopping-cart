@@ -2,24 +2,15 @@
 
 namespace Apps\Api\Cart\AddProduct;
 
+use Apps\Shared\ControllerAction;
 use Cart\Core\Cart\Application\Commands\AddProduct\AddProductCommand;
 use Cart\Core\Product\Domain\ValueObjects\ProductId;
-use Cart\Shared\Domain\Contracts\Bus\CommandBus\CommandBusContract;
 
-final class AddProductAction
+final class AddProductAction extends ControllerAction
 {
-    private CommandBusContract $bus;
-
-    /**
-     * @param CommandBusContract $bus
-     */
-    public function __construct(CommandBusContract $bus)
-    {
-        $this->bus = $bus;
-    }
 
     public function __invoke(ProductId $productId, int $quantity)
     {
-        $this->bus->dispatch(new AddProductCommand($productId, 4));
+        $this->commandBus->dispatch(new AddProductCommand($productId, 4));
     }
 }

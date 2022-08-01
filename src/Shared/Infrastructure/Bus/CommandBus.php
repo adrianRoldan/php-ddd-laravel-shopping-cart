@@ -10,8 +10,6 @@ use Cart\Shared\Domain\Exceptions\CommandHandlerNotFound;
 
 final class CommandBus implements CommandBusContract
 {
-    /** @var array <string> */
-    public static array $routes = [];
     private DependencyContainerContract $container;
 
     /**
@@ -24,15 +22,19 @@ final class CommandBus implements CommandBusContract
 
 
     /**
+     * Simple implementation of a command bus that automatically matches a command with its handler via name
+     * Ex: AddProductToCartCommand matches with AddProductToCartHandler
+     *
      * @param CommandContract $command
      * @return void
      */
     public function dispatch(CommandContract $command): void
     {
         $commandClass = get_class($command);
-        $commandHandlerName = self::$routes[$commandClass] ?? preg_replace('/Command$/', 'Handler', $commandClass);
-        if (null === $commandHandlerName) {
-            throw CommandHandlerNotFound::fromMessage('Handler not found for ' . $commandClass);
+        $commandHandlerName = preg_replace('/Command$/', 'Handler', $commandClass);
+
+        if (null === $commandHandlerName || !class_exists($commandHandlerName)) {
+            throw CommandHandlerNotFound::fromCommandClass($commandClass);
         }
         /** @var CommandHandlerContract $commandHandler */
         $commandHandler = $this->container->resolve($commandHandlerName);

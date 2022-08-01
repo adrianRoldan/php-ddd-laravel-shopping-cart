@@ -3,22 +3,32 @@
 namespace Cart\Shared\Domain\Entities;
 
 
-use Cart\Shared\Domain\Contracts\IdentifierInterface;
-use Cart\Shared\Domain\Enums\DomainEnum;
-use Cart\Shared\Framework\ObjectHelper;
+use Cart\Shared\Domain\DomainSerializer;
+use Cart\Shared\Domain\Events\DomainEvent;
 use ReflectionClass;
-use ReflectionProperty;
 
 abstract class DomainEntity
 {
+    /**
+     * @var DomainEvent[]
+     */
+    protected array $domainEvents = [];
+    private bool $isNew;
+
+    final protected function __construct()
+    {
+        $this->setIsNew(true);
+    }
 
     /**
+     * Returns an instance of a Domain Entity with its properties filled from an array
      * @param array $array
      * @return static
      */
     public static function hydrate(array $array = []): self
     {
         $entity = new static();
+        $entity->setIsNew(false);   //The data already exists in database. then is not a new entity
         $entityProperties = (new ReflectionClass($entity))->getProperties();
 
         foreach ($array as $key => $item) {
@@ -36,60 +46,53 @@ abstract class DomainEntity
 
     public function serialize(): array
     {
-        $attributesTransformed = [];
-        $attributes = $this->getAttributesWithValues();
-
-        /**
-         * @var string $key
-         * @var mixed $value
-         */
-        foreach ($attributes as $key => $value) {
-            $valueTransformed = $value;
-            if (is_array($value)) {
-                $valueTransformed = json_encode($value);
-            }
-            if ($value instanceof DomainEnum) {
-                $valueTransformed = $value->getValue();
-            }
-            if (is_object($value) && ObjectHelper::implements($value, IdentifierInterface::class)) {
-                /** @var IdentifierInterface $value */
-                $valueTransformed = $value->getValue();
-            }
-            $attributesTransformed[$key] = $valueTransformed;
-        }
-        return $attributesTransformed;
+        $serializer = new DomainSerializer($this);
+        return $serializer->serialize();
     }
 
 
-    public function getAttributesWithValues(array $names = null, array $except = []): array
+    final protected function recordEvent(DomainEvent $domainEvent): void
     {
-        $values = [];
-        if (null === $names) {
-            $names = $this->getPublicAttributeArray();
-        }
-        foreach ($names as $name) {
-            $values[$name] = $this->{$name};
-        }
-        foreach ($except as $name) {
-            unset($values[$name]);
-        }
+        $this->domainEvents[] = $domainEvent;
+    }
 
-        return $values;
+
+    /**
+     * @return DomainEvent[]
+     */
+    final public function getEvents(): array
+    {
+        $domainEvents = $this->domainEvents;
+        $this->resetEvents();
+
+        return $domainEvents;
+    }
+
+
+    final public function resetEvents(): void
+    {
+        $this->domainEvents = [];
+    }
+
+    public function eventStreamName(): string
+    {
+        return static::class. "/". $this->id->getValue();
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isNew(): bool
+    {
+        return $this->isNew;
     }
 
     /**
-     * @return array<string>
+     * @param bool $isNew
      */
-    public function getPublicAttributeArray(): array
+    public function setIsNew(bool $isNew): void
     {
-        $class = new ReflectionClass($this);
-        $names = [];
-        foreach ($class->getProperties(ReflectionProperty::IS_PUBLIC) as $property) {
-            if (!$property->isStatic()) {
-                $names[] = $property->getName();
-            }
-        }
-        return $names;
+        $this->isNew = $isNew;
     }
-
 }

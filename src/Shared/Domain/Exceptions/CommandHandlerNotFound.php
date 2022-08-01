@@ -2,12 +2,15 @@
 
 namespace Cart\Shared\Domain\Exceptions;
 
-use Cart\Shared\Domain\Contracts\DomainExceptionContract;
-
 class CommandHandlerNotFound extends BaseDomainException
 {
 
-    public static function fromMessage(string $message): DomainExceptionContract
+    public static function fromCommandClass(string $commandClass): self
+    {
+        return new self('Command handler not found for ' . $commandClass);
+    }
+
+    public static function fromMessage(string $message): self
     {
         return new self($message);
     }
