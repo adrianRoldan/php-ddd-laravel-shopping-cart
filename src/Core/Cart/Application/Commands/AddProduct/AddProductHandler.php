@@ -19,7 +19,6 @@ class AddProductHandler implements CommandHandlerContract
 
     public function handle(AddProductCommand $command): void
     {
-
         $product = ProductMapper::hydrate(EloquentProductMother::random());
 
         $product->hola();

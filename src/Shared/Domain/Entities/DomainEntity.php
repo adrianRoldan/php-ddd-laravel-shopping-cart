@@ -2,12 +2,12 @@
 
 namespace Cart\Shared\Domain\Entities;
 
-
+use Cart\Shared\Domain\Contracts\DomainEntityContract;
 use Cart\Shared\Domain\DomainSerializer;
 use Cart\Shared\Domain\Events\DomainEvent;
 use ReflectionClass;
 
-abstract class DomainEntity
+abstract class DomainEntity implements DomainEntityContract
 {
     /**
      * @var DomainEvent[]
@@ -69,7 +69,11 @@ abstract class DomainEntity
     }
 
 
-    final public function resetEvents(): void
+    /**
+     * Flush the events array
+     * @return void
+     */
+    private function resetEvents(): void
     {
         $this->domainEvents = [];
     }
@@ -81,6 +85,8 @@ abstract class DomainEntity
 
 
     /**
+     * Returns true if the entity is new in database.
+     * When the entity has been hydrated by database data, returns false
      * @return bool
      */
     public function isNew(): bool

@@ -13,6 +13,12 @@ abstract class EloquentBaseModel extends Model
     const CREATED_AT = 'createdAt';
     const UPDATED_AT = 'updatedAt';
 
+    // Avoid Carbon cast
+    protected $casts = [
+        'createdAt' => 'integer',
+        'updatedAt' => 'integer',
+    ];
+
     // Change format to unix timestamps the laravel timestamps
     public function getDateFormat(): string
     {

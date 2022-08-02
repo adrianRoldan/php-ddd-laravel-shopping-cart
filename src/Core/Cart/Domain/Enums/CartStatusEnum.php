@@ -2,7 +2,18 @@
 
 namespace Cart\Core\Cart\Domain\Enums;
 
-class CartStatusEnum extends \Cart\Shared\Domain\Enums\DomainEnum
-{
+use Cart\Shared\Domain\Enums\DomainEnum;
 
+/**
+ * @method static static pending()
+ * @method static static abandoned()
+ * @method static static finished()
+ * @method static static cleaned()
+ */
+class CartStatusEnum extends DomainEnum
+{
+    public const PENDING = 'pending';   //The cart has at least a product
+    public const ABANDONED = 'abandoned';   //Has been pending for a long time
+    public const FINISHED = 'finished';     //The cart has been purchased
+    public const CLEANED = 'cleaned';   //The user has removed all products from the cart
 }

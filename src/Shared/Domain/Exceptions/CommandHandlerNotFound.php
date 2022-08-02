@@ -9,9 +9,4 @@ class CommandHandlerNotFound extends BaseDomainException
     {
         return new self('Command handler not found for ' . $commandClass);
     }
-
-    public static function fromMessage(string $message): self
-    {
-        return new self($message);
-    }
 }

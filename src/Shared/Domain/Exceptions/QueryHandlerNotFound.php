@@ -10,9 +10,4 @@ class QueryHandlerNotFound extends BaseDomainException
     {
         return new self('Query handler not found for ' . $queryClass);
     }
-
-    public static function fromMessage(string $message): self
-    {
-        return new self($message);
-    }
 }

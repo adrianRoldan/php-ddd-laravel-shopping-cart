@@ -27,7 +27,7 @@ final class FakerMother
 
     public static function productName(): string
     {
-        return self::getFaker()->company(); //TODO: more real fake data
+        return self::getFaker()->company(); //TODO: do more real this fake data
     }
 
 

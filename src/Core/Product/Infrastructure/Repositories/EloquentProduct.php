@@ -10,6 +10,8 @@ use Cart\Shared\Infrastructure\Repositories\EloquentBaseModel;
  * @property float $price
  * @property string $name
  * @property string $description
+ * @property int $createdAt
+ * @property int $updatedAt
  */
 final class EloquentProduct extends EloquentBaseModel
 {

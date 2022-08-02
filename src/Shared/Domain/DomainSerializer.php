@@ -6,12 +6,13 @@ use Cart\Shared\Domain\Contracts\IdentifierInterface;
 use Cart\Shared\Domain\Entities\DomainEntity;
 use Cart\Shared\Domain\Enums\DomainEnum;
 use Cart\Shared\Domain\Events\DomainEvent;
+use Cart\Shared\Domain\ValueObjects\ValueObject;
 use Cart\Shared\Framework\ObjectHelper;
 use ReflectionClass;
 use ReflectionProperty;
 
 /**
- * Uses Reflection API
+ * Use Reflection API
  */
 final class DomainSerializer
 {
@@ -48,7 +49,19 @@ final class DomainSerializer
                 /** @var IdentifierInterface $value */
                 $valueTransformed = $value->getValue();
             }
-            $attributesTransformed[$key] = $valueTransformed;
+            if ($value instanceof ValueObject) {
+                $attributes = $value->attributes();
+                if (count($attributes) === 1) {     //Si solo hay una propiedad, la serializamos con su nombre
+                    $voAttribute = $attributes[0];
+                    $attributesTransformed[$key] = $value->{$voAttribute};
+                } else {
+                    foreach ($attributes as $voAttribute) { //Cuando el VO tiene mas de una propiedad, añadimos un prefijo
+                        $attributesTransformed[$key . '_' . $voAttribute] = $value->{$voAttribute};
+                    }
+                }
+            } else {    // Para las propiedades con tipos primitivos
+                $attributesTransformed[$key] = $valueTransformed;
+            }
         }
         return $attributesTransformed;
     }
