@@ -10,6 +10,7 @@ class CartCreatedEvent extends DomainEvent
     public static function create(Cart $entity): CartCreatedEvent
     {
         $event = new self($entity->id->getValue(), $entity->eventStreamName());
+        $event->addData($entity->serialize());
         return $event;
     }
 }

@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use Cart\Core\Cart\Domain\Repositories\CartRepositoryContract;
+use Cart\Core\Cart\Infrastructure\Repositories\EloquentCartRepository;
+use Cart\Core\Product\Domain\Repositories\ProductRepositoryContract;
+use Cart\Core\Product\Infrastructure\Repositories\EloquentProductRepository;
 use Cart\Shared\Domain\Contracts\Bus\CommandBus\CommandBusContract;
 use Cart\Shared\Domain\Contracts\Bus\EventBus\EventBusContract;
 use Cart\Shared\Domain\Contracts\Bus\EventBus\EventDispatcherContract;
@@ -27,7 +31,8 @@ class BindingServiceProvider extends ServiceProvider
     {
         // Repositories
         $this->app->bind(DomainEventRepositoryContract::class, EloquentEventStore::class);
-
+        $this->app->bind(CartRepositoryContract::class, EloquentCartRepository::class);
+        $this->app->bind(ProductRepositoryContract::class, EloquentProductRepository::class);
 
         // Bus
         $this->app->bind(CommandBusContract::class, CommandBus::class);

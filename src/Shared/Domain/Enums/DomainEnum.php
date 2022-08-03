@@ -61,6 +61,13 @@ abstract class DomainEnum
         return in_array($value, $values, $strict);
     }
 
+    /**
+     * @return string
+     */
+    public function getValue(): string
+    {
+        return $this->value;
+    }
 
     /**
      * @return array<string,string>

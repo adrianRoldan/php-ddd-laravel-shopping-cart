@@ -7,6 +7,7 @@ use Cart\Shared\Domain\Exceptions\BaseDomainException;
 
 class MaxProductsExceededException extends BaseDomainException
 {
+    protected $code = 422;
 
     public static function create(): self
     {

@@ -12,6 +12,8 @@ use Cart\Shared\Infrastructure\Repositories\EloquentBaseModel;
  * @property string $description
  * @property int $createdAt
  * @property int $updatedAt
+ * @property float $priceWithDiscount
+ * @property int $minToDiscount
  */
 final class EloquentProduct extends EloquentBaseModel
 {
@@ -23,6 +25,8 @@ final class EloquentProduct extends EloquentBaseModel
         'id',
         'name',
         'description',
-        'price'
+        'price',
+        'priceWithDiscount',
+        'minToDiscount'
     ];
 }

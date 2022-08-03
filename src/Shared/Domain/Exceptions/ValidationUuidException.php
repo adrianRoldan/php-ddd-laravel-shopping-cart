@@ -5,8 +5,10 @@ namespace Cart\Shared\Domain\Exceptions;
 
 final class ValidationUuidException extends BaseDomainException
 {
+    protected $code = 422;
+
     public static function fromValue(string $value): self
     {
-        return new self("The Unique ID ($value) don't has the correct format");
+        return new self("The Unique Universal ID ($value) don't has the correct format");
     }
 }

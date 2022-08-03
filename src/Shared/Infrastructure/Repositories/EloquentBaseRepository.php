@@ -16,7 +16,7 @@ abstract class EloquentBaseRepository implements Repository
     public function upsert(DomainEntity $domainEntity, string $className, array $data): void
     {
         /** @var EloquentBaseModel $eloquentClass */
-        $eloquentClass = $className;
+        $eloquentClass = new $className;
 
         if ($domainEntity->isNew()) {   //Creating
             $this->insert($eloquentClass, $data);

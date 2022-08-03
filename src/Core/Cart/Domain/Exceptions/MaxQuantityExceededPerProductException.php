@@ -7,8 +7,10 @@ use Cart\Shared\Domain\Exceptions\BaseDomainException;
 
 class MaxQuantityExceededPerProductException extends BaseDomainException
 {
+    protected $code = 422;
+
     public static function fromQuantity(int $quantity): self
     {
-        return new self($quantity. "exceeds the maximum quantity per product allowed (". CartSettings::MAX_PER_PRODUCT .")");
+        return new self($quantity. " exceeds the maximum quantity per product allowed (". CartSettings::MAX_PER_PRODUCT .")");
     }
 }

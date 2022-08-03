@@ -20,7 +20,9 @@ final class EloquentProductMother
                 'id'           => ProductId::random()->getValue(),
                 'name'         => FakerMother::productName(),
                 'description'  => FakerMother::text(),
-                'price'        => FakerMother::price(50)
+                'price'        => FakerMother::price(50),
+                'priceWithDiscount'  => FakerMother::price(40),
+                'minToDiscount'      => FakerMother::quantity(1, 5)
             ], $params)
         );
 

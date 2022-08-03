@@ -30,7 +30,7 @@ abstract class DomainEvent implements EventContract
 
     public function addData(array $data): void
     {
-        $this->data .= json_encode($data);
+        $this->data = json_encode($data);
     }
 
 

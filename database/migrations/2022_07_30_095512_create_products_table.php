@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string("name");
             $table->string("description");
             $table->float("price");
+            $table->float("priceWithDiscount");
+            $table->smallInteger('minToDiscount');
             $table->integer('createdAt');
             $table->integer('updatedAt');
         });
