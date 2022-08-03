@@ -6,8 +6,10 @@ use Cart\Core\Cart\Domain\CartSettings;
 use Cart\Core\Cart\Domain\Enums\CartStatusEnum;
 use Cart\Core\Cart\Domain\Events\CartCreatedEvent;
 use Cart\Core\Cart\Domain\Events\ProductAddedEvent;
+use Cart\Core\Cart\Domain\Events\ProductRemovedEvent;
 use Cart\Core\Cart\Domain\Exceptions\MaxProductsExceededException;
 use Cart\Core\Cart\Domain\Exceptions\MaxQuantityExceededPerProductException;
+use Cart\Core\Cart\Domain\Exceptions\ProductInCartNotFound;
 use Cart\Core\Cart\Domain\ValueObjects\CartId;
 use Cart\Core\Cart\Domain\ValueObjects\CartProduct;
 use Cart\Core\Product\Domain\Product;
@@ -17,6 +19,7 @@ use Cart\Shared\Domain\Entities\DomainEntity;
 
 class Cart extends DomainEntity
 {
+
     public CartId $id;
     public UserId $userId;
     /** @var CartProduct[] $products */
@@ -34,14 +37,18 @@ class Cart extends DomainEntity
         $instance->id = $id;
         $instance->userId = $userId;
         $instance->products = [];
-        $instance->status = CartStatusEnum::pending();
+        $instance->status = CartStatusEnum::open();
 
         $instance->recordEvent(CartCreatedEvent::create($instance));
 
         return $instance;
     }
 
-
+    /**
+     * @param Product $product
+     * @param ProductQuantity $quantity
+     * @return void
+     */
     public function addProduct(Product $product, ProductQuantity $quantity): void
     {
         $this->canBeAdded($product);
@@ -53,6 +60,33 @@ class Cart extends DomainEntity
     }
 
 
+    /**
+     * @param Product $product
+     * @return void
+     */
+    public function removeProduct(Product $product): void
+    {
+        $this->canBeRemoved($product);
+
+        unset($this->products[$product->id->getValue()]);
+
+        $this->recordEvent(ProductRemovedEvent::create($product, $this->id));
+    }
+
+
+    /**
+     * @return int
+     */
+    public function countProducts(): int
+    {
+        return count($this->products);
+    }
+
+
+    /**
+     * @param Product $product
+     * @return void
+     */
     private function canBeAdded(Product $product): void
     {
         if(!$this->existsProduct($product)){
@@ -63,12 +97,24 @@ class Cart extends DomainEntity
         }
     }
 
-    public function countProducts(): int
+
+    /**
+     * @param Product $product
+     * @return void
+     */
+    private function canBeRemoved(Product $product): void
     {
-        return count($this->products);
+        if (!$this->existsProduct($product)) {
+            throw ProductInCartNotFound::fromProductAndCart($product->id, $this->id);
+        }
     }
 
 
+    /**
+     * @param Product $product
+     * @param ProductQuantity $newQuantity
+     * @return ProductQuantity
+     */
     private function calculateNewQuantity(Product $product, ProductQuantity $newQuantity): ProductQuantity
     {
         if($this->existsProduct($product)) {
@@ -77,11 +123,12 @@ class Cart extends DomainEntity
         }
 
         if($newQuantity->getValue() > CartSettings::MAX_PER_PRODUCT){
-            throw MaxQuantityExceededPerProductException::fromQuantity($newQuantity);
+            throw MaxQuantityExceededPerProductException::fromQuantity($newQuantity->getValue());
         }
 
         return $newQuantity;
     }
+
 
     /**
      * @param Product $product
@@ -92,6 +139,11 @@ class Cart extends DomainEntity
         return isset($this->products[$product->id->getValue()]);
     }
 
+    /**
+     * @param Product $product
+     * @param ProductQuantity $newQuantity
+     * @return false
+     */
     private function hasDiscount(Product $product, ProductQuantity $newQuantity)
     {
         return false;

@@ -36,7 +36,11 @@ final class ProductQuantity extends UnsignedIntegerValueObject
     private function validate(int $value): void
     {
         if($value > CartSettings::MAX_PER_PRODUCT){
-            throw MaxQuantityExceededPerProductException::fromQuantity($this);
+            throw MaxQuantityExceededPerProductException::fromQuantity($value);
+        }
+
+        if($value == 0){
+            throw ValidationDomainException::fromMessage("At least you must indicate 1 unit");
         }
     }
 }

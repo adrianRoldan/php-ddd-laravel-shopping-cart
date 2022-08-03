@@ -26,17 +26,17 @@ abstract class UnsignedIntegerValueObject
      */
     private function validate(int $value): void
     {
-        if(!is_numeric($value))
+        if(!is_numeric($value)) //TODO: never will be false
             throw ValidationDomainException::fromMessage("The $value is not numeric.");
 
-        $options = array(
-            'options' => array(
+        $options = [
+            'options' => [
                 'min_range' => 0,
-            )
-        );
+            ]
+        ];
 
         //Validate that is a integer
-        if (!filter_var($value, FILTER_VALIDATE_INT, $options)) {
+        if (false === filter_var($value, FILTER_VALIDATE_INT, $options)) {
             throw ValidationDomainException::fromMessage("The number cannot be less than 0");
         }
     }

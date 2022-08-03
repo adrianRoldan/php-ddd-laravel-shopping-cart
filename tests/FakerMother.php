@@ -30,6 +30,10 @@ final class FakerMother
         return self::getFaker()->company(); //TODO: do more real this fake data
     }
 
+    public static function quantity(int $min = 1, int $max = 2000): int
+    {
+        return self::getFaker()->numberBetween($min, $max);
+    }
 
     public static function text(int $max = 200): string
     {
