@@ -30,7 +30,7 @@ abstract class FloatValueObject
      */
     public function multiply(int $multiplier): self
     {
-        return self::fromValue($this->value * $multiplier);
+        return self::fromValue(round($this->value * $multiplier, 2));
     }
 
 

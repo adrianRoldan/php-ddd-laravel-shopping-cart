@@ -1,64 +1,146 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<h1 align="center">
+  Shopping Cart in Laravel with DDD, CQRS and Ports and Adapters Architecture
+</h1>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+### Explanation of my solution
+I have chosen to implement my solution in PHP 8.1.8 using the Laravel framework to use the routing, dependency container and some infrastructure helpers.
+Finally, I have decided to make a Rest API with endpoints that implement the required actions.
+
+I have also chosen to persist in Mysql to emulate a more realistic behavior of a shopping cart.
+
+The business logic is decoupled from the framework in the src/ folder trying to using the DDD approach and best practices.
+
+#### Summary of technologies and code practices:
+
+- PHP8.1.8
+- Laravel 9.19
+- DDD
+- Hexagonal architecture
+- CQRS
+- MySQL 8
+- Event-Driven. System that reflects any relevant business event.
+- Stored all events in a store events.
+- Docker to up the environment
+- PHPstan package to check and fix the code quality
+- Makefile to manage environment, tests and phpstan
+
+To test the features, I recommend use a Postman or similar to call endpoints.
+
+#### Code folder strucuture
+My code is located in the following directories. The rest of the directories are from the framework.
+- Apps/ - Controllers  for the Apps using the Domain. Manage the unique entry points at domain.
+    - Api/ - Contain the webcontrollers and actions that interacts with the domain. Is the unic entry point to endpoints api
+    - Shared - Utils to receive and manage requests and build responses
+- Src/  - domain main folder (DDD)
+    - Core/ - logic of the main domain
+    - Shared/ - Contains the shared code between domains (bounded contexts). In this case only we have one
+
+### Needed tools
+1. Unix environtment. Unix SO or WSL for Windows or 
+2. [Install Docker](https://www.docker.com/get-started)
+3. Install make. 
+
+### Install and up the project
+1. Clone this repository
+2. Execute ```$ make start```
+
+This command build and run the docker image and docker-compose, install dependencies and configure all systems. Also execute the database migrations and populate with some date of Products.
+
+You can execute ```$ make bash``` to enter at webapp container console. 
+
+Containers:
+- The API runs in http://localhost:80
+- The mysql runs in: localhost:3306
+- The PhpMyAdmin runs in: localhost:8080
+
+#### MakeFile utils
+<p>
+    <img src="public/assets/readme/makefile_utils.png" />
 </p>
 
-## About Laravel
+### API Endpoints
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The <strong>Api.postman_collection.json</strong> file has the collection of API requests available with the input data to import into [postman](https://www.postman.com/).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+*IMPORTANT: This implementation tries to emulate the behavior of a shopping cart, then a shopping cart is linked to a user (userId). A user is assigned an unique open or pending shopping cart at most.
+Some endpoints use the user to performs an action on a cartm,so the information of a cart will be obtained from the userId.*
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### POST /api/cart/product/add
 
-## Learning Laravel
+Add a product in a cart
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Body:** _required_. User of the cart, product id and quantity of products
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Content Type** `application/json`
 
-## Laravel Sponsors
+Sample:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```json
 
-### Premium Partners
+{
+    "productId": "f3b25f80-7203-4678-9512-bef61f8c9c30",
+    "userId": "093a959c-15e2-4406-8883-a6992a0745b1",
+    "quantity": 4
+}
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Responses:
 
-## Contributing
+* **200 OK** When the product added correctly
+* **400 Bad Request** When there is a failure in the request format, expected
+  headers, or the payload can't be unmarshalled.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### DELETE /api/cart/product/remove
 
-## Code of Conduct
+Add a product of the cart
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**Body** _required_ Product Id and user of the cart
 
-## Security Vulnerabilities
+**Content Type** `application/json`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Sample:
 
-## License
+```json
+{
+    "productId" : "175a048a-f514-4b48-b694-bf18ebf24df5",
+    "userId"    : "093a959c-15e2-4406-8883-a6992a0745b1"
+}
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Responses:
+
+* **200 OK** When the product has been removed form the cart
+* **400 Bad Request** When there is a failure in the request format, expected
+  headers, or the payload can't be unmarshalled.
+
+### GET /api/cart/{userId}/show
+
+Shows info of a cart
+
+**Body** _required_ The group of people that wants to perform the journey
+
+
+Responses:
+
+* **200 OK** With the data of cart.
+* Sample:
+
+```json
+{
+    "productId" : "175a048a-f514-4b48-b694-bf18ebf24df5",
+    "userId"    : "093a959c-15e2-4406-8883-a6992a0745b1"
+}
+```
+* **400 Bad Request** When there is a failure in the request format or the
+  payload can't be unmarshalled.
+
+### GET /api/product/list
+
+
+
+### GET /api/cart/list
+
+
+
+### GET /api/cart/{userId}/amount/{currency?}
+
