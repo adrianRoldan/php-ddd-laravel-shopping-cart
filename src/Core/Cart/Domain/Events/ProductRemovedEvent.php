@@ -3,7 +3,7 @@
 namespace Cart\Core\Cart\Domain\Events;
 
 use Cart\Core\Cart\Domain\ValueObjects\CartId;
-use Cart\Core\Product\Domain\Product;
+use Cart\Core\Product\Domain\Entities\Product;
 use Cart\Shared\Domain\Events\DomainEvent;
 
 class ProductRemovedEvent extends DomainEvent

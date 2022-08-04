@@ -2,7 +2,7 @@
 
 namespace Cart\Core\Product\Domain\Repositories;
 
-use Cart\Core\Product\Domain\Product;
+use Cart\Core\Product\Domain\Entities\Product;
 use Cart\Core\Product\Domain\ValueObjects\ProductId;
 
 interface ProductRepositoryContract

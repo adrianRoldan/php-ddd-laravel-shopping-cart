@@ -7,13 +7,14 @@ use Cart\Shared\Infrastructure\Repositories\EloquentBaseModel;
 /**
  * @method static make(array|string[] $array_merge)
  * @property string $id
- * @property float $price
+ * @property float $priceAmount
  * @property string $name
  * @property string $description
  * @property int $createdAt
  * @property int $updatedAt
- * @property float $priceWithDiscount
- * @property int $minToDiscount
+ * @property float $priceWithDiscountAmount
+ * @property int $minForDiscount
+ * @property string $priceCurrency
  */
 final class EloquentProduct extends EloquentBaseModel
 {
@@ -25,8 +26,9 @@ final class EloquentProduct extends EloquentBaseModel
         'id',
         'name',
         'description',
-        'price',
-        'priceWithDiscount',
-        'minToDiscount'
+        'priceAmount',
+        'priceCurrency',
+        'priceWithDiscountAmount',
+        'minForDiscount'
     ];
 }

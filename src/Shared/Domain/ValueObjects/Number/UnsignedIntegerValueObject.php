@@ -1,6 +1,6 @@
 <?php
 
-namespace Cart\Shared\Domain\ValueObjects;
+namespace Cart\Shared\Domain\ValueObjects\Number;
 
 use Cart\Shared\Domain\Exceptions\ValidationDomainException;
 
@@ -19,6 +19,10 @@ abstract class UnsignedIntegerValueObject
         return $this->value;
     }
 
+    public function greaterEqualsThan(self $otherInteger): bool
+    {
+        return $this->value >= $otherInteger->getValue();
+    }
 
     /**
      * @param int $value

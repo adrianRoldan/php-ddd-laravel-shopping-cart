@@ -4,6 +4,7 @@ namespace Tests\Unit\Core\Product;
 
 use Cart\Core\Product\Domain\ValueObjects\ProductId;
 use Cart\Core\Product\Infrastructure\Repositories\EloquentProduct;
+use Cart\Shared\Domain\ValueObjects\Money\Currency;
 use Exception;
 use Tests\FakerMother;
 
@@ -20,9 +21,10 @@ final class EloquentProductMother
                 'id'           => ProductId::random()->getValue(),
                 'name'         => FakerMother::productName(),
                 'description'  => FakerMother::text(),
-                'price'        => FakerMother::price(50),
-                'priceWithDiscount'  => FakerMother::price(40),
-                'minToDiscount'      => FakerMother::quantity(1, 5)
+                'priceAmount'        => FakerMother::price(50),
+                'priceCurrency'      => Currency::DEFAULT,
+                'priceWithDiscountAmount' => FakerMother::price(40),
+                'minForDiscount'     => FakerMother::quantity(1, 5)
             ], $params)
         );
 

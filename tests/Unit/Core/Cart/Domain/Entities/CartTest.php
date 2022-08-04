@@ -8,12 +8,13 @@ use Cart\Core\Cart\Domain\Exceptions\MaxProductsExceededException;
 use Cart\Core\Cart\Domain\Exceptions\MaxQuantityExceededPerProductException;
 use Cart\Core\Cart\Domain\ValueObjects\CartId;
 use Cart\Core\Cart\Domain\ValueObjects\CartProduct;
-use Cart\Core\Product\Domain\Product;
+use Cart\Core\Product\Domain\Entities\Product;
 use Cart\Core\Product\Domain\ValueObjects\ProductId;
 use Cart\Core\Product\Domain\ValueObjects\ProductQuantity;
 use Cart\Core\User\Domain\ValueObjects\UserId;
-use Tests\TestCase;
+use Cart\Shared\Domain\ValueObjects\Money\Money;
 use Tests\FakerMother;
+use Tests\TestCase;
 
 class CartTest extends TestCase
 {
@@ -118,8 +119,8 @@ class CartTest extends TestCase
                 ProductId::random(),
                 FakerMother::productName(),
                 FakerMother::text(45),
-                FakerMother::price(50),
-                FakerMother::price(40),
+                Money::fromFloat(FakerMother::price(50)),
+                Money::fromFloat(FakerMother::price(40)),
                 new ProductQuantity(4)
             );
         }

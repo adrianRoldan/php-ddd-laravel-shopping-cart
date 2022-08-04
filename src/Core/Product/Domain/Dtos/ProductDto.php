@@ -9,7 +9,8 @@ final class ProductDto
     public string $description;
     public float $price;
     public float $priceWithDiscount;
-    public int $minToDiscount;
+    public string $currency;
+    public int $minForDiscount;
 
     /**
      * @param string $id
@@ -17,15 +18,17 @@ final class ProductDto
      * @param string $description
      * @param float $price
      * @param float $priceWithDiscount
-     * @param int $minToDiscount
+     * @param string $currency
+     * @param int $minForDiscount
      */
-    public function __construct(string $id, string $name, string $description, float $price, float $priceWithDiscount, int $minToDiscount)
+    public function __construct(string $id, string $name, string $description, float $price, float $priceWithDiscount, string $currency, int $minForDiscount)
     {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
         $this->price = $price;
         $this->priceWithDiscount = $priceWithDiscount;
-        $this->minToDiscount = $minToDiscount;
+        $this->minForDiscount = $minForDiscount;
+        $this->currency = $currency;
     }
 }

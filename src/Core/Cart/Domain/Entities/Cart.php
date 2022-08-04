@@ -12,10 +12,12 @@ use Cart\Core\Cart\Domain\Exceptions\MaxQuantityExceededPerProductException;
 use Cart\Core\Cart\Domain\Exceptions\ProductInCartNotFound;
 use Cart\Core\Cart\Domain\ValueObjects\CartId;
 use Cart\Core\Cart\Domain\ValueObjects\CartProduct;
-use Cart\Core\Product\Domain\Product;
+use Cart\Core\Product\Domain\Entities\Product;
+use Cart\Core\Product\Domain\Repositories\ProductRepositoryContract;
 use Cart\Core\Product\Domain\ValueObjects\ProductQuantity;
 use Cart\Core\User\Domain\ValueObjects\UserId;
 use Cart\Shared\Domain\Entities\DomainEntity;
+use Cart\Shared\Domain\ValueObjects\Money\Money;
 
 class Cart extends DomainEntity
 {
@@ -71,6 +73,29 @@ class Cart extends DomainEntity
         unset($this->products[$product->id->getValue()]);
 
         $this->recordEvent(ProductRemovedEvent::create($product, $this->id));
+    }
+
+
+    /**
+     * @param ProductRepositoryContract $productRepository
+     * @param bool $withDiscounts
+     * @return Money
+     */
+    public function calculateTotalAmount(ProductRepositoryContract $productRepository, bool $withDiscounts = true): Money
+    {
+        $amount = Money::createEmpty();
+
+        foreach($this->products as $cartProduct){
+
+            $product = $productRepository->byIdOrFail($cartProduct->productId);
+
+            $productPrice = $product->price($cartProduct->quantity, $withDiscounts);    //Obtain individual price of product
+            $cartProductPrice = $productPrice->multiply($cartProduct->quantity->getValue());    //Price of cart line (cartproduct)
+
+            $amount = $amount->sum($cartProductPrice);    //Acumulate prices of cart
+        }
+
+        return $amount;
     }
 
 
@@ -148,4 +173,4 @@ class Cart extends DomainEntity
     {
         return false;
     }
-}
+    }

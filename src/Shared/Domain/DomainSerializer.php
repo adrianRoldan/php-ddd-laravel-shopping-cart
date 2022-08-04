@@ -56,7 +56,7 @@ final class DomainSerializer
                     $attributesTransformed[$key] = $value->{$voAttribute};
                 } else {
                     foreach ($attributes as $voAttribute) { //Cuando el VO tiene mas de una propiedad, añadimos un prefijo
-                        $attributesTransformed[$key . '_' . $voAttribute] = $value->{$voAttribute};
+                        $attributesTransformed[$key  . ucfirst($voAttribute)] = $value->{$voAttribute};
                     }
                 }
             } else {    // Para las propiedades con tipos primitivos

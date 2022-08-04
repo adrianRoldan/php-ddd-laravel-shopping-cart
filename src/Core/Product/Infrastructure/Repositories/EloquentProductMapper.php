@@ -2,9 +2,11 @@
 
 namespace Cart\Core\Product\Infrastructure\Repositories;
 
-use Cart\Core\Product\Domain\Product;
+use Cart\Core\Product\Domain\Entities\Product;
 use Cart\Core\Product\Domain\ValueObjects\ProductId;
 use Cart\Core\Product\Domain\ValueObjects\ProductQuantity;
+use Cart\Shared\Domain\ValueObjects\Money\Amount;
+use Cart\Shared\Domain\ValueObjects\Money\Money;
 
 
 final class EloquentProductMapper
@@ -15,9 +17,9 @@ final class EloquentProductMapper
             'id'          => ProductId::create($elProduct->id),
             'name'        => $elProduct->name,
             'description' => $elProduct->description,
-            'price'       => $elProduct->price,
-            'priceWithDiscount'   => $elProduct->priceWithDiscount,
-            'minToDiscount'       => new ProductQuantity($elProduct->minToDiscount)
+            'price'               => Money::fromValues($elProduct->priceAmount, $elProduct->priceCurrency),
+            'priceWithDiscount'   => Amount::fromValue($elProduct->priceWithDiscountAmount),
+            'minForDiscount'      => new ProductQuantity($elProduct->minForDiscount)
         ]);
     }
 }

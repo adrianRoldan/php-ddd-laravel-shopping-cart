@@ -2,8 +2,8 @@
 
 namespace Cart\Core\Product\Infrastructure\Repositories;
 
+use Cart\Core\Product\Domain\Entities\Product;
 use Cart\Core\Product\Domain\Exceptions\ProductNotFoundException;
-use Cart\Core\Product\Domain\Product;
 use Cart\Core\Product\Domain\Repositories\ProductRepositoryContract;
 use Cart\Core\Product\Domain\ValueObjects\ProductId;
 use Cart\Shared\Infrastructure\Repositories\EloquentBaseRepository;

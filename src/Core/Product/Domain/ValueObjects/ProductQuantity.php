@@ -5,7 +5,7 @@ namespace Cart\Core\Product\Domain\ValueObjects;
 use Cart\Core\Cart\Domain\CartSettings;
 use Cart\Core\Cart\Domain\Exceptions\MaxQuantityExceededPerProductException;
 use Cart\Shared\Domain\Exceptions\ValidationDomainException;
-use Cart\Shared\Domain\ValueObjects\UnsignedIntegerValueObject;
+use Cart\Shared\Domain\ValueObjects\Number\UnsignedIntegerValueObject;
 
 final class ProductQuantity extends UnsignedIntegerValueObject
 {

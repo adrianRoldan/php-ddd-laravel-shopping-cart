@@ -4,7 +4,7 @@ namespace Shared\Domain\ValueObjects;
 
 use Cart\Core\Product\Domain\ValueObjects\ProductQuantity;
 use Cart\Shared\Domain\Exceptions\ValidationDomainException;
-use Cart\Shared\Domain\ValueObjects\UnsignedIntegerValueObject;
+use Cart\Shared\Domain\ValueObjects\Number\UnsignedIntegerValueObject;
 use PHPUnit\Framework\TestCase;
 use TypeError;
 

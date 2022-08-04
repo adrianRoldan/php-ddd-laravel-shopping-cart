@@ -81,6 +81,16 @@ class FormRequestHelper
     }
 
 
+    public function getStringOrNull(string $attribute): ?string
+    {
+        $value = $this->formRequest->input($attribute);
+        if ($value === null) {
+            return null;
+        }
+        return $this->getString($attribute);
+    }
+
+
     /**
      * @param string $string
      * @return string
@@ -92,6 +102,19 @@ class FormRequestHelper
             return $value;
         }
         throw InvalidParameterException::fromMessage('Wrong route value ' . $value);
+    }
+
+    /**
+     * @param string $string
+     * @return string|null
+     */
+    public function routeStringOrNull(string $string): ?string
+    {
+        $value = $this->formRequest->route($string);
+        if ($value === null) {
+            return null;
+        }
+        return $this->routeString($string);
     }
 
 

@@ -8,6 +8,7 @@ Route::group(['prefix' => 'cart'], function(){
 
     Route::get("{userId}/show",     [CartController::class, 'showCart'])       ->name('api.cart.show');
     Route::get("list",              [CartController::class, 'list'])           ->name('api.cart.list');
+    Route::get("{userId}/amount/{currency?}", [CartController::class, 'totalAmount'])->name('api.cart.amount');
     Route::post("product/add",      [CartController::class, 'addProduct'])     ->name('api.cart.product.add');
     Route::delete("product/remove", [CartController::class, 'removeProduct'])  ->name('api.cart.product.remove');
 

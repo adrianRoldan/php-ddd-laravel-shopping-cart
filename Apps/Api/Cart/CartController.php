@@ -11,6 +11,8 @@ use Apps\Api\Cart\RemoveProduct\RemoveProductAction;
 use Apps\Api\Cart\RemoveProduct\RemoveProductRequest;
 use Apps\Api\Cart\ShowCart\ShowCartAction;
 use Apps\Api\Cart\ShowCart\ShowCartRequest;
+use Apps\Api\Cart\TotalAmount\TotalCartAmountAction;
+use Apps\Api\Cart\TotalAmount\TotalCartAmountRequest;
 use Apps\Shared\Http\Response\BadRequestResponse;
 use Apps\Shared\Http\Response\SuccessResponse;
 use Illuminate\Http\JsonResponse;
@@ -68,7 +70,10 @@ final class CartController extends Controller
         }
     }
 
-
+    /**
+     * @param ShowCartRequest $request
+     * @return JsonResponse
+     */
     public function showCart(ShowCartRequest $request): JsonResponse
     {
         try {
@@ -84,6 +89,10 @@ final class CartController extends Controller
         }
     }
 
+    /**
+     * @param ListCartsRequest $request
+     * @return JsonResponse
+     */
     public function list(ListCartsRequest $request): JsonResponse
     {
         try {
@@ -96,4 +105,25 @@ final class CartController extends Controller
             return BadRequestResponse::fromException($exception);
         }
     }
+
+    /**
+     * @param TotalCartAmountRequest $request
+     * @return JsonResponse
+     */
+    public function totalAmount(TotalCartAmountRequest $request): JsonResponse
+    {
+        try {
+            $userId = $request->getUserId();
+            $currency = $request->getCurrencyOrNull();
+
+            /** @var TotalCartAmountAction $action */
+            $action = App::make(TotalCartAmountAction::class);
+
+            return SuccessResponse::fromResource($action($userId, $currency));
+
+        }catch(Throwable $exception){
+            return BadRequestResponse::fromException($exception);
+        }
+    }
+
 }
