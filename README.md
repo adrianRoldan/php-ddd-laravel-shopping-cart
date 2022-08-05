@@ -273,11 +273,10 @@ To execute the tests, you can run `make test`
 ### PHPStan ###
 To execute the PHPStan code analyser, run `make phpstan`
 
-The PHPStan executes in maximum level (9)
 
 
 -----
------
+
 
 Please, if you need it, we comment anything about the challenge.
 
