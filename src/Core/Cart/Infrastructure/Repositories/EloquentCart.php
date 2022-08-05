@@ -8,6 +8,7 @@ use Cart\Shared\Infrastructure\Repositories\EloquentBaseModel;
  * @property string $id
  * @property string $userId
  * @property string $status
+ * @method static find(string $id)
  */
 final class EloquentCart extends EloquentBaseModel
 {

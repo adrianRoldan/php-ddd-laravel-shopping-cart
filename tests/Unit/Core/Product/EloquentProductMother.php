@@ -20,7 +20,7 @@ final class EloquentProductMother
             array_merge([
                 'id'           => ProductId::random()->getValue(),
                 'name'         => FakerMother::productName(),
-                'description'  => FakerMother::text(),
+                'description'  => FakerMother::text(20),
                 'priceAmount'        => FakerMother::price(50),
                 'priceCurrency'      => Currency::DEFAULT,
                 'priceWithDiscountAmount' => FakerMother::price(40),

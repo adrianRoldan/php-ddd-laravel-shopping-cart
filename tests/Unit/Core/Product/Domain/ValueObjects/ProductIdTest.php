@@ -42,7 +42,7 @@ class ProductIdTest extends TestCase
 
         //Then
         $this->expectException(ValidationUuidException::class);
-        $this->expectExceptionMessage("The Unique ID ($uuid) don't has the correct format");
+        $this->expectExceptionMessage("The Unique Universal ID ($uuid) don't has the correct format");
 
         //When
         ProductId::create($uuid);

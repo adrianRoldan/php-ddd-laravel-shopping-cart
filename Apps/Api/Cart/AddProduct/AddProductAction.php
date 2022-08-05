@@ -15,7 +15,13 @@ use Cart\Core\User\Domain\ValueObjects\UserId;
 final class AddProductAction extends ControllerAction
 {
 
-    public function __invoke(ProductId $productId, ProductQuantity $quantity, UserId $userId)
+    /**
+     * @param ProductId $productId
+     * @param ProductQuantity $quantity
+     * @param UserId $userId
+     * @return void
+     */
+    public function __invoke(ProductId $productId, ProductQuantity $quantity, UserId $userId): void
     {
         try {
             $cart = $this->queryBus->dispatch(new FindOpenCartByUserQuery($userId));

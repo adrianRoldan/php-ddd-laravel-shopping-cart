@@ -22,7 +22,7 @@ class SqliteInMemoryDatabaseTest extends TestCase
             'id'    => $elProduct->id,
             'name'  => $elProduct->name,
             'description' => $elProduct->description,
-            'price'       => $elProduct->price,
+            'priceAmount' => $elProduct->priceAmount,
             'createdAt'   => $elProduct->createdAt,
             'updatedAt'   => $elProduct->updatedAt
         ]);
