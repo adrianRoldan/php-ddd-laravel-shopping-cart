@@ -8,6 +8,7 @@ use Cart\Shared\Domain\Exceptions\BaseDomainException;
 
 class CartNotFoundException extends BaseDomainException
 {
+    /** @var int $code */
     protected $code = 404;
 
     public static function fromCartId(CartId $cartId): self

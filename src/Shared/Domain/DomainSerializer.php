@@ -26,7 +26,7 @@ final class DomainSerializer
 
     /**
      * Returns a Domain Entity or Event serializated in array
-     * @return array
+     * @return array<string,mixed>
      */
     public function serialize(): array
     {
@@ -76,7 +76,7 @@ final class DomainSerializer
     }
 
     /**
-     * @return array
+     * @return array<string,mixed>
      */
     private function getAttributesWithValues(): array
     {

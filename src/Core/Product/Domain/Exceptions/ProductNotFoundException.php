@@ -7,6 +7,7 @@ use Cart\Shared\Domain\Exceptions\BaseDomainException;
 
 class ProductNotFoundException extends BaseDomainException
 {
+    /** @var int $code */
     protected $code = 404;
 
     public static function fromProductId(ProductId $productId): self

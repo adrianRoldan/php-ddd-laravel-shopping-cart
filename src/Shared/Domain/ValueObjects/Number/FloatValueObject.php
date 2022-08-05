@@ -8,7 +8,7 @@ abstract class FloatValueObject
 {
     protected float $value;
 
-    protected function __construct(float $value)
+    final function __construct(float $value)
     {
         $this->validate($value);
         $this->value = $value;
@@ -19,16 +19,20 @@ abstract class FloatValueObject
         return $this->value;
     }
 
-    public static function fromValue(float $value): self
+    /**
+     * @param float $value
+     * @return static
+     */
+    public static function fromValue(float $value): static
     {
         return new static($value);
     }
 
     /**
      * @param int $multiplier
-     * @return self
+     * @return static
      */
-    public function multiply(int $multiplier): self
+    public function multiply(int $multiplier): static
     {
         return self::fromValue(round($this->value * $multiplier, 2));
     }
@@ -36,9 +40,9 @@ abstract class FloatValueObject
 
     /**
      * @param float $multiplier
-     * @return self
+     * @return static
      */
-    public function multiplyByFloat(float $multiplier): self
+    public function multiplyByFloat(float $multiplier): static
     {
         return self::fromValue(round($this->value * $multiplier, 2));
     }
@@ -49,8 +53,9 @@ abstract class FloatValueObject
      */
     private function validate(float $value): void
     {
-        if(!is_numeric($value)) //TODO: never will be false
+        if(!is_numeric($value)) { //TODO: never will be false
             throw ValidationDomainException::fromMessage("The $value is not numeric.");
+        }
 
         $options = [
             'options' => [
@@ -59,7 +64,7 @@ abstract class FloatValueObject
         ];
 
         //Validate that is a float
-        if (false === filter_var($value, FILTER_VALIDATE_FLOAT, $options)) {
+        if ($value != 0 && false == filter_var($value, FILTER_VALIDATE_FLOAT, $options)) {
             throw ValidationDomainException::fromMessage("$value is a incorrect number");
         }
     }

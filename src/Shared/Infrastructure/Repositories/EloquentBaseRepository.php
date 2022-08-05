@@ -34,7 +34,7 @@ abstract class EloquentBaseRepository implements Repository
 
     /**
      * @param EloquentBaseModel $eloquentClass
-     * @param array $data
+     * @param array<string,mixed> $data
      * @return void
      */
     private function insert(EloquentBaseModel $eloquentClass, array $data): void
@@ -44,7 +44,7 @@ abstract class EloquentBaseRepository implements Repository
 
     /**
      * @param EloquentBaseModel $ec
-     * @param array $data
+     * @param array<string,mixed> $data
      * @return void
      */
     private function update(EloquentBaseModel $ec, array $data): void

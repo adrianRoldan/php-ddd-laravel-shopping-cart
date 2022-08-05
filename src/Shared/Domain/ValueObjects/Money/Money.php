@@ -20,7 +20,7 @@ class Money extends ValueObject
      * @param Currency|null $currency
      * @return Money
      */
-    public static function create(Amount $amount, ?Currency $currency = null): self
+    public static function create(Amount $amount, ?Currency $currency = null): Money
     {
         return new self($amount, $currency ?? Currency::fromValue(Currency::DEFAULT));
     }
@@ -30,7 +30,7 @@ class Money extends ValueObject
      * @param Currency|null $currency
      * @return Money
      */
-    public static function createEmpty(?Currency $currency = null): self
+    public static function createEmpty(?Currency $currency = null): Money
     {
         return new self(Amount::fromValue(0), $currency ?? Currency::fromValue(Currency::DEFAULT));
     }
@@ -40,7 +40,7 @@ class Money extends ValueObject
      * @param Currency|null $currency
      * @return Money
      */
-    public static function fromFloat(float $number, ?Currency $currency = null): self
+    public static function fromFloat(float $number, ?Currency $currency = null): Money
     {
         return new self(Amount::fromValue($number), $currency ?? Currency::fromValue(Currency::DEFAULT));
     }
@@ -49,9 +49,9 @@ class Money extends ValueObject
     /**
      * @param float $priceAmount
      * @param string $fromValue
-     * @return static
+     * @return Money
      */
-    public static function fromValues(float $priceAmount, string $fromValue): self
+    public static function fromValues(float $priceAmount, string $fromValue): Money
     {
         return new self(Amount::fromValue($priceAmount), Currency::fromValue($fromValue));
     }

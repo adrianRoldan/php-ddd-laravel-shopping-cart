@@ -23,17 +23,24 @@ abstract class DomainEvent implements EventContract
         $this->id = DomainEventId::random();
         $this->eventName = get_called_class();
         $this->relatedId = $relatedId;
-        $this->occurredOn = floor(microtime(true) * 1000);
+        $this->occurredOn = (int)floor(microtime(true) * 1000);
         $this->data = "";
         $this->stream = $stream;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     * @return void
+     */
     public function addData(array $data): void
     {
         $this->data = json_encode($data);
     }
 
 
+    /**
+     * @return array<string,mixed>
+     */
     public function serializeArray(): array
     {
         $serializer = new DomainSerializer($this);

@@ -8,7 +8,7 @@ class ApiXmlProviderException extends BaseDomainException
     /**
      * @param string $url
      * @param string $messageError
-     * @return static
+     * @return self
      */
     public static function fromUrlAndMessage(string $url, string $messageError): self
     {
@@ -17,7 +17,7 @@ class ApiXmlProviderException extends BaseDomainException
 
     /**
      * @param string $url
-     * @return static
+     * @return self
      */
     public static function fromUrl(string $url): self
     {

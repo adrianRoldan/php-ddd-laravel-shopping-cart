@@ -2,6 +2,6 @@
 
 namespace Cart\Shared\Domain\Exceptions;
 
-class EventDispatcherException extends BaseDomainException
+final class EventDispatcherException extends BaseDomainException
 {
 }

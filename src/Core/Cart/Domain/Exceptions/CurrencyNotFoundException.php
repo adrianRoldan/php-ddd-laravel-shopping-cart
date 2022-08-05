@@ -9,7 +9,7 @@ class CurrencyNotFoundException extends BaseDomainException
 {
     /**
      * @param Currency $currency
-     * @return static
+     * @return self
      */
     public static function fromCurrency(Currency $currency): self
     {

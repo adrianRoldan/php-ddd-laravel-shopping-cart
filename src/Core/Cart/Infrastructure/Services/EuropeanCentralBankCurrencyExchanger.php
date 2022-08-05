@@ -8,6 +8,7 @@ use Cart\Shared\Domain\Contracts\ApiXmlProviderContract;
 use Cart\Shared\Domain\ValueObjects\Money\Amount;
 use Cart\Shared\Domain\ValueObjects\Money\Currency;
 use Cart\Shared\Domain\ValueObjects\Money\Money;
+use SimpleXMLElement;
 
 class EuropeanCentralBankCurrencyExchanger implements CurrencyExchangeProviderContract
 {
@@ -40,17 +41,29 @@ class EuropeanCentralBankCurrencyExchanger implements CurrencyExchangeProviderCo
     }
 
 
-    private function searchRate($ratesXml)
+    /**
+     * @param SimpleXMLElement $ratesXml
+     * @return mixed
+     */
+    private function searchRate(SimpleXMLElement $ratesXml): mixed
     {
         return $ratesXml->Cube->Cube->Cube;
     }
 
-    private function elementToString($element): string
+    /**
+     * @param SimpleXMLElement $element
+     * @return string
+     */
+    private function elementToString(SimpleXMLElement $element): string
     {
         return strtoupper($element->__toString());
     }
 
-    private function elementToFloat($element): float
+    /**
+     * @param SimpleXMLElement $element
+     * @return float
+     */
+    private function elementToFloat(SimpleXMLElement $element): float
     {
         return (float) $element;
     }

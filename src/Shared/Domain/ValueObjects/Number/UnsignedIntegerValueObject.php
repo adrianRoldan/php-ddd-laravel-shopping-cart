@@ -40,7 +40,7 @@ abstract class UnsignedIntegerValueObject
         ];
 
         //Validate that is a integer
-        if (false === filter_var($value, FILTER_VALIDATE_INT, $options)) {
+        if (false == filter_var($value, FILTER_VALIDATE_INT, $options)) {
             throw ValidationDomainException::fromMessage("The number cannot be less than 0");
         }
     }

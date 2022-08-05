@@ -23,8 +23,11 @@ class CreateCartHandler implements CommandHandlerContract
         $this->eventBus = $eventBus;
     }
 
-
-    public function handle(CreateCartCommand $command)
+    /**
+     * @param CreateCartCommand $command
+     * @return void
+     */
+    public function handle(CreateCartCommand $command): void
     {
         $cart = Cart::create($command->cartId, $command->userId);
 

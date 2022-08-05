@@ -24,6 +24,7 @@ final class EventBus implements EventBusContract
         $this->eventStore = $eventStore;
     }
 
+
     /**
      * @param DomainEvent[] $events
      * @return void
@@ -42,7 +43,11 @@ final class EventBus implements EventBusContract
         }
     }
 
-    private function storeEvent(DomainEvent $event)
+    /**
+     * @param DomainEvent $event
+     * @return void
+     */
+    private function storeEvent(DomainEvent $event): void
     {
         $this->eventStore->store($event);
     }

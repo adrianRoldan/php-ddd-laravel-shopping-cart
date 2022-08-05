@@ -5,5 +5,5 @@ namespace Cart\Shared\Domain\Contracts\Bus\CommandBus;
 
 interface CommandBusContract
 {
-    public function dispatch(CommandContract $command);
+    public function dispatch(CommandContract $command): void;
 }

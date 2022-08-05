@@ -51,9 +51,9 @@ abstract class UuidValueObject implements IdentifierInterface
 
 
     /**
-     * @return RamseyUuidProvider
+     * @return UuidProviderContract
      */
-    protected static function getRamseyGenerator(): RamseyUuidProvider
+    protected static function getRamseyGenerator(): UuidProviderContract
     {
         if (null === self::$uuidGenerator) {
             $uuidProvider = new RamseyUuidProvider();
@@ -64,7 +64,7 @@ abstract class UuidValueObject implements IdentifierInterface
     }
 
 
-    private function validate(string $value)
+    private function validate(string $value): void
     {
         if($value === "")
             throw ValidationUuidException::fromMessage("The ID is required");

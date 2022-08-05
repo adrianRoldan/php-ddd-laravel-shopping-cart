@@ -14,6 +14,9 @@ abstract class EloquentBaseModel extends Model
     const UPDATED_AT = 'updatedAt';
 
     // Avoid Carbon cast
+    /**
+     * @var string[]
+     */
     protected $casts = [
         'createdAt' => 'integer',
         'updatedAt' => 'integer',

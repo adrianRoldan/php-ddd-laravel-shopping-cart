@@ -7,6 +7,7 @@ use Cart\Shared\Domain\Exceptions\BaseDomainException;
 
 class MaxQuantityExceededPerProductException extends BaseDomainException
 {
+    /** @var int $code */
     protected $code = 422;
 
     public static function fromQuantity(int $quantity): self

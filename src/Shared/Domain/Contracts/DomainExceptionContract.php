@@ -6,5 +6,5 @@ use DomainException;
 
 interface DomainExceptionContract
 {
-    public static function fromMessage(string $message): self;
+    public static function fromMessage(string $message): static;
 }

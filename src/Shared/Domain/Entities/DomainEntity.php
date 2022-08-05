@@ -3,10 +3,15 @@
 namespace Cart\Shared\Domain\Entities;
 
 use Cart\Shared\Domain\Contracts\DomainEntityContract;
+use Cart\Shared\Domain\Contracts\IdentifierInterface;
 use Cart\Shared\Domain\DomainSerializer;
 use Cart\Shared\Domain\Events\DomainEvent;
 use ReflectionClass;
 
+
+/**
+ * @property IdentifierInterface $id
+ */
 abstract class DomainEntity implements DomainEntityContract
 {
     /**
@@ -22,7 +27,7 @@ abstract class DomainEntity implements DomainEntityContract
 
     /**
      * Returns an instance of a Domain Entity with its properties filled from an array
-     * @param array $array
+     * @param array<string,mixed> $array
      * @return static
      */
     public static function hydrate(array $array = []): self
@@ -43,7 +48,9 @@ abstract class DomainEntity implements DomainEntityContract
         return $entity;
     }
 
-
+    /**
+     * @return array<string,mixed>
+     */
     public function serialize(): array
     {
         $serializer = new DomainSerializer($this);
@@ -78,6 +85,9 @@ abstract class DomainEntity implements DomainEntityContract
         $this->domainEvents = [];
     }
 
+    /**
+     * @return string
+     */
     public function eventStreamName(): string
     {
         return static::class. "/". $this->id->getValue();
