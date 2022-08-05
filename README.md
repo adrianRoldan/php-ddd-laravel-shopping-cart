@@ -38,7 +38,7 @@ My code is located in the following directories. The rest of the directories are
     - Shared/ - Contains the shared code between domains (bounded contexts). In this case only we have one
 
 ### Needed tools
-1. Unix environtment. Unix SO or WSL for Windows or 
+1. Unix environtment. Unix SO or WSL for Windows
 2. [Install Docker](https://www.docker.com/get-started)
 3. Install make. 
 
@@ -46,9 +46,9 @@ My code is located in the following directories. The rest of the directories are
 1. Clone this repository
 2. Execute ```$ make start```
 
-This command build and run the docker image and docker-compose, install dependencies and configure all systems. Also execute the database migrations and populate with some date of Products.
+This command build and run the docker image and docker-compose, install dependencies and configure all systems. Also execute the database migrations and populate with some data of products.
 
-You can execute ```$ make bash``` to enter at webapp container console. 
+You can execute ```$ make bash``` to enter at webapp container console to interact with artisan or container files.
 
 Containers:
 - The API runs in http://localhost:80

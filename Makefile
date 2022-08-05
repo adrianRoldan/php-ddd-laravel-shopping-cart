@@ -22,7 +22,7 @@ bash-db: ## Execute and enter in database bash
 	docker-compose exec db bash
 
 phpstan: ## Execute code analyzer phpstan
-	docker-compose exec webapp ./vendor/bin/phpstan analyse src --level 9
+	docker-compose exec webapp ./vendor/bin/phpstan analyse src --level 6
 
 test: ## Execute test with phpunit
 	docker-compose exec webapp ./vendor/bin/phpunit

@@ -1,0 +1,147 @@
+{
+	"info": {
+		"_postman_id": "2db8b8b8-198b-40dc-abae-9e127f6643af",
+		"name": "Shopping Cart PHP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3797731"
+	},
+	"item": [
+		{
+			"name": "Add product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productId\" : \"142fac56-1bb3-4b00-863b-74ac7541fd25\",\r\n    \"userId\"    : \"093a959c-15e2-4406-8883-a6992a0745b1\",\r\n    \"quantity\"  : 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/api/cart/product/add",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"cart",
+						"product",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Product",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productId\" : \"175a048a-f514-4b48-b694-bf18ebf24df5\",\r\n    \"userId\"    : \"093a959c-15e2-4406-8883-a6992a0745b1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/api/cart/product/remove",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"cart",
+						"product",
+						"remove"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show User Cart",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/api/cart/093a959c-15e2-4406-8883-a6992a0745b1/show",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"cart",
+						"093a959c-15e2-4406-8883-a6992a0745b1",
+						"show"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/api/product/list",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"product",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show Carts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/api/cart/list",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"cart",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Total Cart Amount",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/api/cart/093a959c-15e2-4406-8883-a6992a0745b1/amount/usd",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"cart",
+						"093a959c-15e2-4406-8883-a6992a0745b1",
+						"amount",
+						"usd"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
